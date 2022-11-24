@@ -1,66 +1,46 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Image, View } from 'react-native';
-import logo from '../../../assets/logo.png';
-import Texto from '../../Components/Texto';
+import { FlatList, StyleSheet, SafeAreaView, Image, View } from 'react-native';
 import Topo from './components/Topo';
+import Detalhes from './components/Detalhes';
+import Botao from './components/Botao';
+import Item from './components/Item';
+import Texto from '../../Components/Texto';
 
-export default function Cesta () {
+export default function Cesta ({ topo, detalhes, itens }) {
     return (
-    <>
-        <SafeAreaView>                        
-            <Topo/>
-
-            <View style={estilos.view}>
-                <Texto style={estilos.nome}>Cesta de Verduras</Texto>
-                <View style={estilos.logoJuntoNomeFazenda}>
-                    <Image source={logo} style={estilos.imagemFazenda} />
-                    <Texto style={estilos.nomeFazenda}>Jeny Jack Farm</Texto>
+    <SafeAreaView>
+        <>
+        <FlatList 
+            data={itens.lista}
+            renderItem={Item}
+            keyExtractor={({ nome }) => nome}
+            ListHeaderComponent={() => {
+                return <>
+                <Topo {...topo} />
+                <View style={estilos.view}> 
+                    <Detalhes {...detalhes}/>                
+                    <Botao {...detalhes} /> 
+                    <Texto style={estilos.titulo}>{ itens.titulo }</Texto>               
                 </View>
-                <Texto style={estilos.descricaoTexto}>
-                    Umas cesta com produtos selecionados cuidadosamente da fazendo direto para a sua cozinha
-                </Texto>
-                <Texto style={estilos.preco}>R$ 40,00</Texto>
-            </View>
-        </SafeAreaView>
-    </>
+                </>
+            }}
+        />                                
+        </ >
+    </SafeAreaView>
     )
 }
 
-const estilos = StyleSheet.create({    
+const estilos = StyleSheet.create({  
+    titulo: {
+        color: '#464646',
+        fontWeight: 'bold',
+        marginTop: 32,
+        marginBottom: 8,
+        fontSize: 20,
+        lineHeight: 32,
+    },  
     view: {
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
-    nome: {
-        color: '#464646',
-        fontSize: 26,
-        lineHeight: 42,        
-        fontWeight: 'bold',
-    },
-    logoJuntoNomeFazenda: {
-        flexDirection: "row",
-        paddingVertical: 12,
-    },  
-    imagemFazenda: {
-        width: 32,
-        height: 32,
-    },
-    nomeFazenda: {
-        fontSize: 16,
-        lineHeight: 26,
-        marginLeft: 12,        
-    },
-    descricaoTexto: {
-        color: '#a3a3a3',
-        fontSize: 16,
-        lineHeight: 16,
-    },
-    preco: {
-        color: '#2a9f85',
-        fontWeight: 'bold',
-        fontSize: 26,
-        lineHeight: 42,
-        marginTop: 8,
-    }
-
 })

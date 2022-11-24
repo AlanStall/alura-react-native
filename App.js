@@ -4,7 +4,9 @@ import { useFonts,
   Montserrat_400Regular, 
   Montserrat_700Bold 
 } from '@expo-google-fonts/montserrat';
-import Cesta from './src/telas/Cesta'
+import Cesta from './src/telas/Cesta';
+import mock from './src/mocks/cestaTextos';
+/* import AppLoading from 'expo-app-loading'; */
 
 
 export default function App() {
@@ -14,13 +16,13 @@ export default function App() {
   })
 
   if(!fontesCarregadas) {
-    return <View/>
+    return < View /> /* AppLoading não deu certo */
   }
 
   return (
-    <SafeAreaView>
-        <StatusBar/>        
-        <Cesta/>
+    <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar/>
+        <Cesta {...mock} />        
     </SafeAreaView>
   );
 }
